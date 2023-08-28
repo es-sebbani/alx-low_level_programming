@@ -1,31 +1,36 @@
 #include "lists.h"
-
 /**
- * get_nodeint_at_index - returns the nth node of a linked list
- * @head: pointer to the head of the list
- * @index: index of the node required
- *
- * Return: the address of the node
+ * print_listint_safe - function that prints a linked list with a loop safely.
+ * @head: pointer to the 1st node of the linked list
+ * Return: new_node
  */
-listint_t *get_nodeint_at_index(listint_t *head, unsigned int index)
+size_t print_listint_safe(const listint_t *head)
 {
-	listint_t *cursor = NULL;
-	unsigned int i = 0;
+	const listint_t *tmp_n = NULL;
+	const listint_t *l_n = NULL;
+	size_t counter = 0;
+	size_t new_n;
 
-	while (head != NULL)
+	tmp_n = head;
+	while (tmp_n)
 	{
-		if (i <= index)
+		printf("[%p] %d\n", (void *)tmp_n, tmp_n->n);
+		counter++;
+		tmp_n = tmp_n->next;
+		l_n = head;
+		new_n = 0;
+		while (new_n < counter)
 		{
-			if (i == index)
+			if (tmp_n == l_n)
 			{
-				cursor = head;
-				break;
+				printf("-> [%p] %d\n", (void *)tmp_n, tmp_n->n);
+				return (counter);
 			}
-			head = head->next;
-			i++;
+			l_n = l_n->next;
+			new_n++;
 		}
-		else
-			return (NULL);
+		if (!head)
+			exit(98);
 	}
-	return (cursor);
+	return (counter);
 }
